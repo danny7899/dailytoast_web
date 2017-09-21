@@ -1,0 +1,119 @@
+<?php
+  include 'login/dbc.php';  
+  session_start();
+?>
+
+<html lang="en">
+  <head>
+	<link rel="shortcut icon" href="images/icon.ico">
+    <meta charset="UTF-8">
+    <title>Home - Daily Toast</title>
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+    <!--[if lt IE 9]>
+	<script>
+      document.createElement("article");
+      document.createElement("aside");
+      document.createElement("footer");
+      document.createElement("header");
+      document.createElement("main");
+      document.createElement("nav");
+      document.createElement("section");
+    </script>
+    <![endif]-->
+  </head>
+  <body>
+  <div id="wrapper">
+  
+	<div id="header">
+		<header class="banner">
+      <?php if (!isset($_SESSION['user_id']) && !isset($_SESSION['user_name']) ){
+      echo "<div id=\"login\"><a href=\"login/login.php\">".'Login'."</a></div>";
+      }else{echo "<div id=\"login\">".'Hi, '."<a href=\"login/myaccount.php\">".$_SESSION['user_name']."</a>".'! '."<a href=\"login/logout.php\">".'Logout'."</div></a>";}
+      ?>
+      
+	    <div id="logo"><img src="images/logo.png" align="left" width="56" height="56"></div>
+      <div id="title" >
+		    <h1>Daily Toast</h1>
+        <p>Worldwide News in Real - Time</p>
+      </div>
+    </header>
+  
+    <nav>
+      <ul>
+        <li><a href="index.php">Home</a></li>
+        <li><a href="#">Archives</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+	</div>
+	
+	<div id="content">
+    <main>
+      <section>
+        <h2>About</h2>
+        <article>
+          <header>
+            <h3>Nothing here.</h3>
+            <p>(unavailable)</p>
+			<br/>
+          </header>
+          <p>This page is still under construction.</p>
+        </article>
+      </section>
+    </main>
+
+    <aside>
+		<h2>This page is under progress</h2>
+		<p>This page is still under progress, the pages or subdirectories may not be available yet, e.g. Archives.</p>
+		<br/>
+	<h2>Please leave a comment</h2>
+		<div class="form">
+			<form method='post'>
+				Name: <input type='text'  style="width: 210px; margin-bottom: 10px;" name='name' id='name' /><br />
+	
+				Email: <input type='text' style="width: 210px; margin-bottom: 10px;" name='email' id='email' /><br />
+
+				Website: <input type='text' style="width: 210px; margin-bottom: 10px;" name='website' id='website' /><br />
+
+				Comment:<br /><textarea name='comment' style="width: 210px; height: 66px; margin-bottom: 10px;" id='comment'></textarea><br />
+	
+				<input type='hidden' name='articleid' id='articleid' value='<? echo $_GET["id"]; ?>' />
+				<input type='submit' style="width: 210px; margin-bottom: 10px;" value='Submit' />  
+			</form>
+		</div>
+    </aside>
+	</div>
+	
+	<div id="footer">
+    <footer>
+		<script type="text/javascript">
+			tday=new Array("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday");
+			tmonth=new Array("January","February","March","April","May","June","July","August","September","October","November","December");
+
+			function GetClock(){
+				var d=new Date();
+				var nday=d.getDay(),nmonth=d.getMonth(),ndate=d.getDate(),nyear=d.getYear(),nhour=d.getHours(),nmin=d.getMinutes(),nsec=d.getSeconds(),ap;
+
+				if(nhour==0){ap=" AM";nhour=12;}
+				else if(nhour<12){ap=" AM";}
+				else if(nhour==12){ap=" PM";}
+				else if(nhour>12){ap=" PM";nhour-=12;}
+
+				if(nyear<1000) nyear+=1900;
+				if(nmin<=9) nmin="0"+nmin;
+				if(nsec<=9) nsec="0"+nsec;
+
+				document.getElementById('clockbox').innerHTML=""+tday[nday]+", "+tmonth[nmonth]+" "+ndate+", "+nyear+" "+nhour+":"+nmin+":"+nsec+ap+"";
+			}
+
+			window.onload=function(){
+				GetClock();
+				setInterval(GetClock,1000);
+			}
+		</script>
+	<div id="clockbox"></div>
+	</footer>
+	</div>
+  </div>
+  </body>
+</html>
